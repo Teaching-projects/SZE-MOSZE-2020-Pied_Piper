@@ -8,4 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: g++ -Wall proba.cpp  
+      - run: g++ -Wall proba.cpp
+      - run: ./run_test.sh
