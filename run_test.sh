@@ -2,7 +2,8 @@
 
 IFS=$'\n'
 
+rm output.txt
+
 for i in 'cat input.txt'; do
-  echo "Szamok: $i, duplajuk:"
-  echo "$i" | ./a.exe
+  echo "$i" | ./a.exe >> output.txt
 done

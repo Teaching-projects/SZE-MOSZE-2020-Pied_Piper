@@ -9,5 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: g++ -Wall proba.cpp
-      - run: chmod u+r+x run_test.sh
+      - run: chmod +x run_test.sh
       - run: ./run_test.sh
+      - run: diff output.txt good_output.txt
