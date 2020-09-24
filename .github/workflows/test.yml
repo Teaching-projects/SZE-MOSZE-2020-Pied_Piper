@@ -1,10 +1,10 @@
-name: shell_test worflow
+name: test workflow
 
 on:
   push
 
 jobs:
-  build:
+  Build_And_Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
