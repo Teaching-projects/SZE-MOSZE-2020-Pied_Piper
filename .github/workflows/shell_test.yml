@@ -1,0 +1,14 @@
+name: shell_test worflow
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: g++ -Wall Character.cpp Source.cpp
+      - run: chmod +x shell_test.sh
+      - run: ./shell_test.sh
+      - run: diff actual_output.txt good_output.txt 
