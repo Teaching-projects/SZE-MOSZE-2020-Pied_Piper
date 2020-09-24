@@ -1,6 +1,6 @@
-David died. Geri wins.
-David died. Alex wins.
-Alex died. Geri wins.
-David died. Geri wins.
-Alex died. Geri wins.
-David died. Alex wins.
+Geri wins. Remaining HP: 100
+Alex wins. Remaining HP: 20
+Geri wins. Remaining HP: 100
+Geri wins. Remaining HP: 120
+Geri wins. Remaining HP: 50
+Alex wins. Remaining HP: 40
