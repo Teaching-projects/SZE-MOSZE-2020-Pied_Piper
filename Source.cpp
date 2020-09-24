@@ -1,94 +1,73 @@
-#include<iostream>
-#include"Player.h"
+#include <iostream>
+#include "Character.h"
 
-//DECLARATION
-void Fight(Player*, Player*);
-void PrintAllStatus(Player*, Player*);
-void CheckHp(Player*, Player*, bool &);
+void logCharacterParameters(Character &, Character&);
 
+void game(Character&, Character&);
 
-
-int main() 
+int main(int argc, char* argv[])
 {
-	//Creating players 	
-	Player* player1 = new Player("Maple",150,10);
-	Player* player2 = new Player("Sally",45,30);
-	
-	//Start fight 
-	Fight(player1,player2);
+	if (argc != 7) { 
+		std::cout << "Wrong input! " << std::endl;
+		std::cout << "A suitable input: ./a.out Maple 150 10 Sally 45 30 " << std::endl;
+		return 1;
+	}
+	else 
+	{
+		Character player1(argv[1], std::stoi(argv[2]), std::stoi(argv[3]));
+		Character player2(argv[4], std::stoi(argv[5]), std::stoi(argv[6]));
 
-	//Deleting pointers
-	delete player1;
-	delete player2;
+		game(player1, player2);
+
+	}
 
 	return 0;
 }
 
-//DEFINITION
-void Fight(Player* player1, Player* player2)
+void logCharacterParameters(Character & ply1, Character & ply2)
 {
-	//fip = fight in progress
-	bool fip = true;
-	bool playerSwap = true;
-	
-	//Printng all starting status 
-	PrintAllStatus(player1, player2);
+	std::cout << ply1.getName() << ": HP: " << ply1.getHealthPoint() << ", DMG: " << ply1.getDamage() << std::endl;
+	std::cout << ply2.getName() << ": HP: " << ply2.getHealthPoint() << ", DMG: " << ply2.getDamage() << std::endl;
+}
 
-	//Fight scene 
-	while (fip)
+void game(Character &pl1, Character &pl2)
+{
+	//Log players parameters 
+	logCharacterParameters(pl1,pl2);
+
+	while (pl1.isDead() == 0 && pl2.isDead() == 0 ) 
 	{
-		//1th->2th
-		if(playerSwap)
+		//1->2
+		//Log attack order 
+		std::cout << pl1.getName() << " -> " << pl2.getName() << std::endl;
+		//Player1 attacks 
+		pl2.injure(pl1.getDamage());
+		//Log players parameters 
+		logCharacterParameters(pl1, pl2);
+		//Check pl2's hp
+		if(pl2.isDead())
 		{
-			std::cout << player1->GetName() << " -> " << player2->GetName()<< "\n";
-
-			//Attack
-			player2->SetInjury(player1->GetDmg());
-		
-			//Status after the round 
-			PrintAllStatus(player1, player2);
-			//Check players hp
-			CheckHp(player1, player2, fip);
-			//Swap players
-			playerSwap = false;
+			std::cout << pl2.getName() << " died. " << pl1.getName() << " wins." << std::endl;
+			break;
 		}
-		//2th->1th
-		else
+
+		//2->1
+		//Log attack order 
+		std::cout << pl2.getName() << " -> " << pl1.getName() << std::endl;
+		//Player2 attacks 
+		pl1.injure(pl2.getDamage());
+		//Log players parameters 
+		logCharacterParameters(pl1, pl2);
+		//Check pl1's hp
+		if (pl1.isDead())
 		{
-			std::cout << player2->GetName() << " -> " << player1->GetName() << "\n";
-
-			//Attack
-			player1->SetInjury(player2->GetDmg());
-
-			//Status after the round 
-			PrintAllStatus(player1, player2);
-			//Check players hp
-			CheckHp(player1, player2, fip);
-			//Swap players
-			playerSwap = true;
+			std::cout << pl1.getName() << " died. " << pl2.getName() << " wins." << std::endl;
+			break;
 		}
-		
+
 	}
 
 }
 
-void PrintAllStatus(Player* player1, Player* player2)
-{
-	player1->GetPlayerStatus();
-	player2->GetPlayerStatus();
-}
 
-void CheckHp(Player* player1, Player* player2, bool & fip)
-{
-	if (player1->GetHp() <= 0)
-	{
-		std::cout << player1->GetName() << " died. " << player2->GetName() << " wins.";
-		fip = false;
-	}
-	else if (player2->GetHp() <= 0)
-	{
-		std::cout << player2->GetName() << " died. " << player1->GetName() << " wins.";
-		fip = false;
-	}
-}
 
